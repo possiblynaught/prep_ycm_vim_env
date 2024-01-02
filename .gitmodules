@@ -1,0 +1,3 @@
+[submodule "common_shell_functions"]
+	path = common_shell_functions
+	url = https://github.com/possiblynaught/common_shell_functions.git
