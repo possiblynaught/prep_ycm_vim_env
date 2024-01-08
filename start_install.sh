@@ -104,7 +104,7 @@ main () {
     echo -e "\n### Begin custom aliases added by: $(basename "$SCRIPT_DIR")" >> "$rc"
     echo "alias unlock='ssh-add -l >/dev/null || ssh-add $priv_key'" >> "$rc"
     echo "alias clean='git clean -fx'" >> "$rc"
-    echo "alias pull='unlock; find . -mindepth 1 -maxdepth 1 -type d -print -execdir git --git-dir={}/.git --work-tree=$PWD/{} pull origin \;'" >> "$rc"
+    echo "alias pull='unlock; find . -mindepth 1 -maxdepth 1 -type d -print -execdir git --git-dir={}/.git --work-tree=\$PWD/{} pull origin \;'" >> "$rc"
     echo "alias push='git add . && git commit && git push'" >> "$rc"
     echo "alias repo='cd $repo_dir'" >> "$rc"
     echo "alias summ='git diff --compact-summary HEAD^1 HEAD'" >> "$rc"
@@ -140,8 +140,9 @@ main () {
   sudo firecfg
 
   # Notify of completion
-  echo "Finished! Make sure to reload your .bashrc with:
-  source $rc"
+  echo -e "\n-------------------------------------------------------------------------------
+  Finished! Make sure to reload your .bashrc with:
+    source $rc"
 }
 
 # Run main
