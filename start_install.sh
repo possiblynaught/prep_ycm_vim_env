@@ -66,16 +66,16 @@ main () {
   sudo systemctl mask ssh
 
   # Set up git and enable git-lfs
-  if [[ "$(git config core.editor)" != "vim" ]] || [ -z "$(git config user.email)" ]; then
+  if [ -z "$(git config --global user.name)" ]; then
     read -r -p "Please enter the git username for commits: " name
-    read -r -p "Please enter the git email for commits: " email
-    if [ -z "$name" ] || [ -z "$email" ]; then
-      err "Error, missing name or email from previous git config prompt"
-    fi
     git config --global user.name "$name"
-    git config --global user.email "$email"
-    git config --global core.editor "vim"
   fi
+  if [ -z "$(git config --global user.email)" ]; then
+    read -r -p "Please enter the git email for commits: " email
+    git config --global user.email "$email"
+  fi
+  git config --global core.editor "vim"
+  git config --global pull.ff only
   git lfs install
   echo "git configured for: $(git config user.name) ($(git config user.email))"
 
@@ -108,7 +108,6 @@ main () {
     echo "alias push='git add . && git commit && git push'" >> "$rc"
     echo "alias repo='cd $repo_dir'" >> "$rc"
     echo "alias summ='git diff --compact-summary HEAD^1 HEAD'" >> "$rc"
-    echo "alias key='unlock;'" >> "$rc"
     echo "alias add='unlock;'" >> "$rc"
   fi
 
